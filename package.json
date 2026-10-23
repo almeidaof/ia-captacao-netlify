@@ -1,0 +1,8 @@
+{
+  "name": "agente-comercial-netlify",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Protótipo de IA de captação com painel protegido e página de teste",
+  "engines": { "node": ">=18" },
+  "dependencies": { "@netlify/blobs": "^8.1.0" }
+}

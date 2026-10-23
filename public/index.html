@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel comercial | Leads</title>
+<style>
+:root{color-scheme:dark;--bg:#0d111b;--panel:#171c2a;--text:#f4f4ff;--muted:#adb5ca;--accent:#ac8bff;--edge:#333b50}*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:24px}
+main{max-width:1100px;margin:auto}.head{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+h1{font-size:clamp(27px,4vw,39px);margin:0 0 6px}.muted{color:var(--muted)}.tabs{display:flex;gap:10px;flex-wrap:wrap}
+a,button{border:1px solid var(--edge);border-radius:10px;padding:10px 15px;background:#252b3d;color:#fff;text-decoration:none;cursor:pointer;font-size:15px}
+a.active,button.primary{background:var(--accent);color:#18112a;font-weight:700}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid white;outline-offset:2px}
+.panel{border:1px solid var(--edge);background:var(--panel);border-radius:18px;padding:20px;margin:25px 0}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.controls label{flex:1;min-width:220px;font-weight:600}.controls input{display:block;width:100%;margin-top:9px;background:#0e1220;border:1px solid #5c657b;border-radius:8px;padding:11px 12px;color:white;font-size:16px}
+#status{min-height:24px;margin:14px 0;color:#c9d5f6}#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--edge);background:var(--panel);border-radius:14px;padding:18px;overflow-wrap:anywhere}.card h2{font-size:18px;margin:0 0 12px}.tag{display:inline-block;color:#d9c5ff;font-weight:700;font-size:12px;text-transform:uppercase}
+.card p{margin:8px 0;font-size:14px}.card small{color:var(--muted)}.summary{font-weight:600}footer{color:var(--muted);font-size:13px;margin:32px 0}
+</style></head><body><main>
+<div class="head"><div><h1>✦ Painel de leads</h1><p class="muted">Agente comercial • acesso protegido</p></div><nav class="tabs" aria-label="Páginas"><a href="/" class="active" aria-current="page">Leads</a><a href="/teste.html">Testar agente →</a></nav></div>
+<section class="panel"><div class="controls"><label for="senha">Senha de administradora<input id="senha" type="password" autocomplete="current-password" placeholder="Senha cadastrada na Netlify"></label><button id="btn" class="primary" type="button">Entrar e atualizar</button><button id="csv" type="button" disabled>Exportar CSV</button></div><p id="status" role="status">Informe a senha para ver seus contatos.</p></section>
+<p class="summary" id="summary"></p><section id="cards" aria-live="polite"></section>
+<footer>Protótipo: antes de receber clientes reais, configure integrações Meta e privacidade de dados.</footer>
+</main><script src="/js/painel.js" defer></script></body></html>

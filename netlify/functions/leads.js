@@ -1,15 +1,17 @@
-const { json, isAdmin, leadStore } = require('./utils/shared');
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'GET') return json(405, { erro: 'Método não permitido' });
-  if (!isAdmin(event)) return json(401, { erro: 'Senha incorreta ou não configurada' });
+import { json, isAdmin, leadStore } from './utils/shared.js';
+
+// Functions API v2: garante que a integração automática com Netlify Blobs seja injetada.
+export default async function handler(req) {
+  if (req.method !== 'GET') return json(405, { erro: 'Método não permitido' });
+  if (!isAdmin(req)) return json(401, { erro: 'Senha incorreta ou não configurada' });
   try {
     const store = leadStore();
     const { blobs } = await store.list();
-    const leads = (await Promise.all(blobs.slice(0, 500).map(x => store.get(x.key, {type:'json'})))).filter(Boolean);
-    leads.sort((a,b) => String(b.ultimaInteracao || '').localeCompare(String(a.ultimaInteracao || '')));
+    const leads = (await Promise.all(blobs.slice(0, 500).map(x => store.get(x.key, { type: 'json' })))).filter(Boolean);
+    leads.sort((a, b) => String(b.ultimaInteracao || '').localeCompare(String(a.ultimaInteracao || '')));
     return json(200, { leads, parcial: blobs.length > 500 });
   } catch (e) {
-    console.error('Falha ao listar leads:', e.message);
+    console.error('Falha ao listar leads:', e.name, e.message);
     return json(503, { erro: 'Não foi possível carregar os contatos' });
   }
-};
+}

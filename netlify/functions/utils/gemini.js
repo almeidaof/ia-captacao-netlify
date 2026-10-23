@@ -32,4 +32,4 @@ async function gerarResposta(history, message) {
   if (!txt) throw new Error('Gemini sem resposta em texto');
   return txt.slice(0, 2500);
 }
-module.exports = { gerarResposta };
+export { gerarResposta };

@@ -1,21 +1,84 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Painel comercial | Leads</title>
-<style>
-:root{color-scheme:dark;--bg:#0d111b;--panel:#171c2a;--text:#f4f4ff;--muted:#adb5ca;--accent:#ac8bff;--edge:#333b50}*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:24px}
-main{max-width:1100px;margin:auto}.head{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-h1{font-size:clamp(27px,4vw,39px);margin:0 0 6px}.muted{color:var(--muted)}.tabs{display:flex;gap:10px;flex-wrap:wrap}
-a,button{border:1px solid var(--edge);border-radius:10px;padding:10px 15px;background:#252b3d;color:#fff;text-decoration:none;cursor:pointer;font-size:15px}
-a.active,button.primary{background:var(--accent);color:#18112a;font-weight:700}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid white;outline-offset:2px}
-.panel{border:1px solid var(--edge);background:var(--panel);border-radius:18px;padding:20px;margin:25px 0}
-.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.controls label{flex:1;min-width:220px;font-weight:600}.controls input{display:block;width:100%;margin-top:9px;background:#0e1220;border:1px solid #5c657b;border-radius:8px;padding:11px 12px;color:white;font-size:16px}
-#status{min-height:24px;margin:14px 0;color:#c9d5f6}#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.card{border:1px solid var(--edge);background:var(--panel);border-radius:14px;padding:18px;overflow-wrap:anywhere}.card h2{font-size:18px;margin:0 0 12px}.tag{display:inline-block;color:#d9c5ff;font-weight:700;font-size:12px;text-transform:uppercase}
-.card p{margin:8px 0;font-size:14px}.card small{color:var(--muted)}.summary{font-weight:600}footer{color:var(--muted);font-size:13px;margin:32px 0}
-</style></head><body><main>
-<div class="head"><div><h1>✦ Painel de leads</h1><p class="muted">Agente comercial • acesso protegido</p></div><nav class="tabs" aria-label="Páginas"><a href="/" class="active" aria-current="page">Leads</a><a href="/teste.html">Testar agente →</a></nav></div>
-<section class="panel"><div class="controls"><label for="senha">Senha de administradora<input id="senha" type="password" autocomplete="current-password" placeholder="Senha cadastrada na Netlify"></label><button id="btn" class="primary" type="button">Entrar e atualizar</button><button id="csv" type="button" disabled>Exportar CSV</button></div><p id="status" role="status">Informe a senha para ver seus contatos.</p></section>
-<p class="summary" id="summary"></p><section id="cards" aria-live="polite"></section>
-<footer>Protótipo: antes de receber clientes reais, configure integrações Meta e privacidade de dados.</footer>
-</main><script src="/js/painel.js" defer></script></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111326">
+  <meta name="description" content="Astro IA Generalista — conhecimento, criatividade e apoio a tarefas em uma única inteligência artificial.">
+  <title>Astro | IA Generalista</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101225;--panel:#1a1e34;--border:#3d4260;--ink:#f3f4ff;--muted:#c2c6df;--accent:#b7a6ff}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100dvh;color:var(--ink);background:radial-gradient(ellipse at 50% -20%,#36305d 0%,var(--bg) 62%);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    main{width:min(900px,100%);margin:auto;padding:25px 18px 55px}
+    header{text-align:center;padding:16px 0 25px}
+    .mark{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 13px;border-radius:19px;background:linear-gradient(135deg,#c5b8ff,#765ac5);font-size:32px;color:#1c1234;box-shadow:0 6px 40px #9a80ff34}
+    h1{margin:0;letter-spacing:.07em;font-size:clamp(38px,7vw,60px);line-height:1.1}
+    .subtitle{margin:8px 0 0;font-weight:700;letter-spacing:.13em;color:#d5caff;font-size:13px;text-transform:uppercase}
+    .intro{margin:11px 0 0;color:var(--muted)}
+    .panel{border:1px solid var(--border);border-radius:18px;background:var(--panel);padding:20px;margin-bottom:17px;box-shadow:0 10px 34px #0809131c}
+    h2{font-size:18px;margin:0 0 11px}
+    label{display:block;font-size:14px;font-weight:650;margin-bottom:8px}
+    input,textarea{width:100%;background:#101429;color:var(--ink);border:1px solid #72799b;border-radius:11px;padding:12px;font:inherit}
+    textarea{resize:vertical;min-height:125px}
+    input:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+    button{border:0;border-radius:11px;background:var(--accent);color:#211837;padding:12px 17px;font:inherit;font-weight:700;cursor:pointer}
+    button.secondary{border:1px solid #555d80;background:#2c314e;color:var(--ink)}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .access{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+    .access label{grid-column:1/-1;margin-bottom:0}
+    .access input{min-width:0}
+    .suggestions{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+    .suggestions button{background:#2b3150;color:#e7e3ff;border:1px solid #5a638c;padding:9px 13px;font-weight:600;font-size:14px}
+    .actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:9px;margin-top:12px}
+    #status{min-height:24px;margin:12px 0 0;color:#d3d8fa;font-size:14px}
+    #resultado{min-height:110px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}
+    .empty{color:var(--muted)}
+    #resultado.busy{opacity:.7}
+    .result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .result-head h2{margin:0}
+    .result-head button{padding:8px 12px;font-size:13px}
+    footer{color:var(--muted);font-size:12px;text-align:center;padding-top:5px}
+    @media(max-width:500px){main{padding:15px 12px 35px}.panel{padding:15px}.access{grid-template-columns:1fr}.actions button{flex:1}.intro{font-size:14px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="mark" aria-hidden="true">✦</div>
+    <h1>ASTRO</h1>
+    <p class="subtitle">Inteligência Artificial Generalista</p>
+    <p class="intro">Uma IA para ajudar você a aprender, criar, analisar e resolver problemas.</p>
+  </header>
+  <section class="panel" aria-label="Acesso ao Astro">
+    <div class="access">
+      <label for="senha">Senha de acesso ao projeto</label>
+      <input id="senha" type="password" autocomplete="current-password" placeholder="Senha configurada na Netlify">
+      <button id="mostrar" class="secondary" type="button" aria-label="Mostrar ou ocultar senha">Mostrar</button>
+    </div>
+  </section>
+  <section class="panel" aria-labelledby="pedido-titulo">
+    <h2 id="pedido-titulo">O que você precisa?</h2>
+    <div class="suggestions" aria-label="Sugestões de tarefas">
+      <button type="button" data-idea="Explique este assunto de forma simples: ">Explicar</button>
+      <button type="button" data-idea="Crie um texto sobre: ">Criar texto</button>
+      <button type="button" data-idea="Me ajude a desenvolver ou corrigir este código: ">Programar</button>
+      <button type="button" data-idea="Me ajude a organizar este projeto ou ideia: ">Organizar</button>
+    </div>
+    <label for="pedido">Descreva sua tarefa, dúvida ou ideia</label>
+    <textarea id="pedido" maxlength="2000" placeholder="Digite aqui o que você quer que o Astro faça..."></textarea>
+    <div class="actions">
+      <button id="enviar" type="button">Solicitar ao Astro</button>
+      <button id="novo" class="secondary" type="button">Nova tarefa</button>
+    </div>
+    <p id="status" role="status" aria-live="polite">Pronto para começar.</p>
+  </section>
+  <section class="panel" aria-labelledby="resultado-titulo">
+    <div class="result-head"><h2 id="resultado-titulo">Resultado do Astro</h2><button id="copiar" class="secondary" type="button" disabled>Copiar resultado</button></div>
+    <div id="resultado" role="region" aria-label="Resultado gerado pela inteligência artificial" class="empty">O resultado da sua solicitação aparecerá aqui.</div>
+  </section>
+  <footer>Astro IA Generalista • Os pedidos não são armazenados pelo projeto. Evite compartilhar informações sensíveis.</footer>
+</main>
+<script src="/js/astro.js" defer></script>
+</body>
+</html>
